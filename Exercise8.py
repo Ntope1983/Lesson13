@@ -1,4 +1,12 @@
-# CRUD with dictionary
+"""
+Student Management System (CRUD)
+
+This is a console-based Python project for managing student records.
+It supports creating, reading, updating, and deleting students using
+a list of dictionaries. The project focuses on practicing functions,
+input validation, and clean code structure.
+"""
+
 students = [{"name": "john",
              "Surname": "Polydoras",
              "FatherName": "Konstantinos",
@@ -228,6 +236,7 @@ def delete_pupil_by_id(pupil_id):
             return
     print(f"Student with ID {pupil_id} not found.")
 
+
 def show_menu_search_id_surname():
     menu3 = {1: "Search by Surname",
              2: "Search by ID"}
@@ -244,12 +253,10 @@ def show_menu_search_id_surname():
             for item in surname_list:
                 print_student_details(item["id"], True)
             return get_id()
-        else :
+        else:
             return surname_list[0]["id"]
     else:
         return get_id()
-
-
 
 
 def main():
@@ -281,50 +288,20 @@ def main():
             elif choose_option2 == 3:
                 print_student_details()
         elif choose_option == 3:
-            menu3 = {1: "Search by Surname",
-                     2: "Search by ID"}
-            for option in menu3:
-                print(f"{option}: {menu3[option]}")
-            choose_option3 = get_valid_input(2)
-            if choose_option3 == 1:
-                surname_list = search_pupil_by_surname(get_surname())
-                if len(surname_list) == 0:
-                    print("Student not found.")
-                elif len(surname_list) > 1:
-                    print("More than one student with this surname. Enter ID to update.")
-                    for item in surname_list:
-                        print_student_details(item["id"], True)
-                    update_pupil_by_id(get_id())
-                else:
-                    update_pupil_by_id(surname_list[0]["id"])
-            elif choose_option3 == 2:
-                choose_id = get_id()
-                print_student_details(choose_id, False)
-                update_pupil_by_id(choose_id)
+            student_id = show_menu_search_id_surname()
+            if student_id is None:
+                # no student → do nothing
+                return
+            update_pupil_by_id(student_id)
         elif choose_option == 4:
-            menu4 = {1: "Search by Surname",
-                     2: "Search by ID"}
-            for option in menu4:
-                print(f"{option}: {menu4[option]}")
-            choose_option4 = get_valid_input(2)
-            if choose_option4 == 1:
-                surname_list = search_pupil_by_surname(get_surname())
-                if len(surname_list) == 0:
-                    print("Student not found.")
-                elif len(surname_list) > 1:
-                    print("More than one student with this surname. Enter ID to delete.")
-                    for item in surname_list:
-                        print_student_details(item["id"], True)
-                    delete_pupil_by_id(get_id())
-                else:
-                    delete_pupil_by_id(surname_list[0]["id"])
-            elif choose_option4 == 2:
-                choose_id = get_id()
-                print_student_details(choose_id, False)
-                delete_pupil_by_id(choose_id)
+            student_id = show_menu_search_id_surname()
+            if student_id is None:
+                # no student → do nothing
+                return
+            delete_pupil_by_id(student_id)
         elif choose_option == 5:
             print("Exiting program...")
             break
 
-show_menu_search_id_surname()
+
 main()
